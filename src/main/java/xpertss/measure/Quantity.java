@@ -30,6 +30,10 @@
 package xpertss.measure;
 
 /**
+ * TODO Should this be abstract vs interface. The example supports base Numeric
+ * Quantities as well as Mixed-Radix Quantities like 1 hour, 5 min, 30 seconds
+ * or 6 ft, 3 in. I MAY just do basic Numeric
+ * <p/>
  * Represents a quantitative property of a phenomenon, body, or substance, that
  * can be quantified by measurement. {@link xpertss.measure.quantity.Mass Mass},
  * time, distance, heat, and angular separation are among the familiar examples
@@ -85,7 +89,7 @@ package xpertss.measure;
  * @see <a href="http://martinfowler.com/eaaDev/quantity.html">Martin Fowler -
  *      Quantity</a>
  */
-public interface Quantity<Q extends Quantity<Q>> {
+public interface Quantity<Q extends Quantity<Q>> extends Comparable<Quantity<Q>> {
     
    /**
     * The scale of a {@link Quantity}, either {@code ABSOLUTE} or {@code RELATIVE}.
@@ -276,14 +280,83 @@ public interface Quantity<Q extends Quantity<Q>> {
      * Returns the {@code Scale} of this {@code Quantity}, if it's absolute or relative.
      *
      * @return the scale, if it's an absolute or relative quantity.
-     * @since 2.0
-     
      * @see <a href="https://en.wikipedia.org/wiki/Absolute_scale">Wikipedia: Absolute scale</a>
      */
     Scale getScale();
 
 
 
-    // TODO Put factory methods here
+
+
+
+
+
+
+
+    // Comparable methods
+
+    /**
+     * Compares two instances of {@link Quantity <Q>}. Conversion of unit can happen if necessary
+     *
+     * @param that
+     *          the {@code quantity<Q>} to be compared with this instance.
+     * @return {@code true} if {@code that > this}.
+     * @throws NullPointerException
+     *           if the that is null
+     */
+    boolean isGreaterThan(Quantity<Q> that);
+
+    /**
+     * Compares two instances of {@link Quantity <Q>}, doing the conversion of unit if necessary.
+     *
+     * @param that
+     *          the {@code quantity<Q>} to be compared with this instance.
+     * @return {@code true} if {@code that >= this}.
+     * @throws NullPointerException
+     *           if the that is null
+     */
+    boolean isGreaterThanOrEqualTo(Quantity<Q> that);
+
+    /**
+     * Compares two instances of {@link Quantity <Q>}, doing the conversion of unit if necessary.
+     *
+     * @param that
+     *          the {@code quantity<Q>} to be compared with this instance.
+     * @return {@code true} if {@code that < this}.
+     * @throws NullPointerException
+     *           if the quantity is null
+     */
+    boolean isLessThan(Quantity<Q> that);
+
+    /**
+     * Compares two instances of {@link Quantity <Q>}, doing the conversion of unit if necessary.
+     *
+     * @param that
+     *          the {@code quantity<Q>} to be compared with this instance.
+     * @return {@code true} if {@code that < this}.
+     * @throws NullPointerException
+     *           if the quantity is null
+     */
+    boolean isLessThanOrEqualTo(Quantity<Q> that);
+
+
+
+
+
+
+    public static <Q extends Quantity<Q>> Quantity<Q> parse(CharSequence csq)
+    {
+      return null;
+    }
+
+    public static <Q extends Quantity<Q>> Quantity<Q> of(Number value, Unit<Q> unit, Scale scale)
+    {
+     return null;
+    }
+
+    public static <Q extends Quantity<Q>> Quantity<Q> of(Number value, Unit<Q> unit)
+    {
+     return of(value, unit, Scale.ABSOLUTE);
+    }
 
 }
