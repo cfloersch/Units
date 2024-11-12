@@ -4,18 +4,18 @@ package xpertss.measure;
 import org.xpertss.unit.types.BaseUnit;
 import org.xpertss.unit.types.ProductUnit;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 
 /**
  * Represents the dimension of a unit.
  * <p/>
- * Concrete dimensions are obtained through the {@link Unit#getDimension()}
- * method.
+ * Concrete dimensions are obtained through the {@link Unit#getDimension()} method.
  * <p/>
- * Two units {@code u1} and {@code u2} are {@link Unit#isCompatible(Unit)
- * compatible} if and only if
- * {@code u1.getDimension().equals(u2.getDimension())}.
+ * Two units {@code u1} and {@code u2} are {@link Unit#isCompatible(Unit) compatible}
+ * if and only if {@code u1.getDimension().equals(u2.getDimension())}.
  *
  * @see <a href="http://en.wikipedia.org/wiki/Dimensional_analysis">Wikipedia:
  * Dimensional Analysis</a>
@@ -156,18 +156,31 @@ public class Dimension {
    }
 
 
-   @Override
-   public String toString()
-   {
-      return pseudoUnit.toString();
+
+
+
+   /**
+    * Returns the fundamental (base) dimensions and their exponent whose product
+    * is this dimension or <code>null</code> if this dimension is a fundamental
+    * dimension.
+    *
+    * @return the mapping between the base dimensions and their exponent.
+    */
+   @SuppressWarnings("rawtypes")
+   public Map<? extends Dimension, Integer> getBaseDimensions() {
+      Map<? extends Unit, Integer> pseudoUnits = pseudoUnit.getBaseUnits();
+      if (pseudoUnits == null) return null;
+      final Map<Dimension, Integer> baseDimensions = new HashMap<>();
+      for (Map.Entry<? extends Unit, Integer> entry : pseudoUnits.entrySet()) {
+         baseDimensions.put(new Dimension(entry.getKey()), entry.getValue());
+      }
+      return baseDimensions;
    }
 
    @Override
    public boolean equals(Object obj)
    {
-      if (this == obj) {
-         return true;
-      }
+      if (this == obj) return true;
       if (obj instanceof Dimension) {
          Dimension other = (Dimension) obj;
          return Objects.equals(pseudoUnit, other.pseudoUnit);
@@ -181,7 +194,11 @@ public class Dimension {
       return Objects.hashCode(pseudoUnit);
    }
 
-
+   @Override
+   public String toString()
+   {
+      return pseudoUnit.toString();
+   }
 
 
 

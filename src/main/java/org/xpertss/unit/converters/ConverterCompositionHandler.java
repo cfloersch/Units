@@ -1,49 +1,39 @@
-/*
- * Units of Measurement Reference Implementation
- * Copyright (c) 2005-2023, Jean-Marie Dautelle, Werner Keil, Otavio Santana.
- *
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions
- *    and the following disclaimer in the documentation and/or other materials provided with the distribution.
- *
- * 3. Neither the name of JSR-385, Indriya nor the names of their contributors may be used to endorse or promote products
- *    derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 package org.xpertss.unit.converters;
 
+import org.xpertss.unit.simplify.CompositionTask;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.BinaryOperator;
 
 /**
  * Functional interface for handling the composition (concatenation) of two unit converters.
  */
-public interface ConverterCompositionHandler {
+public class ConverterCompositionHandler {
+
+
+    private final static Map<Class<? extends AbstractConverter>, Integer> normalFormOrder = new HashMap<>(9);
+    static {
+        normalFormOrder.put(AbstractConverter.IDENTITY.getClass(), 0);
+        normalFormOrder.put(PowerOfIntConverter.class, 1);
+        normalFormOrder.put(RationalConverter.class, 2);
+        normalFormOrder.put(PowerOfPiConverter.class, 3);
+        normalFormOrder.put(DoubleMultiplyConverter.class, 4);
+        normalFormOrder.put(AddConverter.class, 5);
+        normalFormOrder.put(LogConverter.class, 6);
+        normalFormOrder.put(ExpConverter.class, 7);
+        normalFormOrder.put(ConverterPair.class, 99);
+    }
+
 
     /**
      * Takes two converters {@code left}, {@code right} and returns a (not necessarily new) 
      * converter that is equivalent to the mathematical composition of these:
-     * <p>
+     * <p/>
      * compose(left, right) === left o right 
-     * 
-     * <p>
+     * <p/>
      * Implementation Note: Instead of using AbstractConverter as parameter 
      * and result types, this could be generalized to UnitConverter, but that 
      * would require some careful changes within AbstractConverter itself.
@@ -58,17 +48,61 @@ public interface ConverterCompositionHandler {
             AbstractConverter left, 
             AbstractConverter right,
             BiPredicate<AbstractConverter, AbstractConverter> canReduce,
-            BinaryOperator<AbstractConverter> doReduce);
-    
-    // -- FACTORIES (BUILT-IN) 
-    
-    /**
-     * @return the default built-in UnitCompositionHandler which is yielding a normal-form, 
-     * required to decide whether two UnitConverters are equivalent
-     */
-    public static ConverterCompositionHandler yieldingNormalForm()
+            BinaryOperator<AbstractConverter> doReduce)
     {
-        return new UnitCompositionHandlerYieldingNormalForm();
+        if(left.isIdentity()) {
+            if(right.isIdentity()) {
+                return isNormalFormOrderWhenIdentity(left, right) ? left : right;
+            }
+            return right;
+        }
+        if(right.isIdentity()) return left;
+
+        if(canReduce.test(left, right)) {
+            return doReduce.apply(left, right);
+        }
+
+        final boolean commutative = left.isLinear() && right.isLinear();
+        final boolean swap = commutative && !isNormalFormOrderWhenCommutative(left, right);
+
+        final ConverterPair nonSimplifiedForm = (swap)
+                    ? new ConverterPair(right, left)
+                    : new ConverterPair(left, right);
+
+        return new CompositionTask(
+                this::isNormalFormOrderWhenIdentity,
+                this::isNormalFormOrderWhenCommutative,
+                canReduce,
+                doReduce)
+           .reduceToNormalForm(nonSimplifiedForm.getConversionSteps());
+
     }
+
+
+
+    private boolean isNormalFormOrderWhenIdentity(AbstractConverter a, AbstractConverter b)
+    {
+        if(a.getClass().equals(b.getClass())) return true;
+        return normalFormOrder.get(a.getClass()) <= normalFormOrder.get(b.getClass());
+    }
+
+    private boolean isNormalFormOrderWhenCommutative(AbstractConverter a, AbstractConverter b)
+    {
+        if(a.getClass().equals(b.getClass())) {
+            if(a instanceof PowerOfIntConverter) {
+                return  ((PowerOfIntConverter)a).getBase() <= ((PowerOfIntConverter)b).getBase();
+            }
+            return true;
+        }
+
+        Integer orderA = Objects.requireNonNull(normalFormOrder.get(a.getClass()),
+           ()->String.format("no normal-form order defined for class '%s'", a.getClass().getName()));
+        Integer orderB = Objects.requireNonNull(normalFormOrder.get(b.getClass()),
+           ()->String.format("no normal-form order defined for class '%s'", b.getClass().getName()));
+
+        return orderA <= orderB;
+    }
+
+
 
 }

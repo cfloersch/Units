@@ -1,0 +1,10 @@
+Quantity changes from interface to AbstractQuantity - It utilizes impl NumericQuantity from private package
+
+----------------------------
+
+AbstractUnit may go away entirely with that functionality being encapsulated in Unit
+
+----------------------------
+
+
+

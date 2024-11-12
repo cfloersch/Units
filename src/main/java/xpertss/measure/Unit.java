@@ -1,8 +1,9 @@
 package xpertss.measure;
 
+import org.xpertss.unit.DimensionalModel;
 import org.xpertss.unit.converters.AbstractConverter;
 import org.xpertss.unit.math.Calculator;
-import org.xpertss.unit.math.Calculus;
+import org.xpertss.unit.math.NumberSystem;
 import org.xpertss.unit.types.AlternateUnit;
 import org.xpertss.unit.types.ProductUnit;
 import org.xpertss.unit.types.TransformedUnit;
@@ -10,24 +11,26 @@ import xpertss.measure.quantity.Dimensionless;
 import org.xpertss.unit.converters.AddConverter;
 import org.xpertss.unit.converters.MultiplyConverter;
 
+import java.util.Map;
+
 
 /**
- * Represents a determinate {@linkplain Quantity quantity} (as of length, time, heat,
- * or value) adopted as a standard of measurement.
+ * Represents a determinate {@linkplain Quantity quantity} (as of length, time, heat, or value)
+ * adopted as a standard of measurement.
  * <p/>
- * It is helpful to think of instances of this class as recording the history by which
- * they are created. Thus, for example, the string {@code "g/kg"} (which is a
- * dimensionless unit) would result from invoking the method {@link #toString()} on a
- * unit that was created by dividing a gram unit by a kilogram unit.
+ * It is helpful to think of instances of this class as recording the history by which they are
+ * created. Thus, for example, the string {@code "g/kg"} (which is a dimensionless unit) would
+ * result from invoking the method {@link #toString()} on a unit that was created by dividing a
+ * gram unit by a kilogram unit.
  * <p/>
- * This interface supports the multiplication of offset units. The result is usually
- * a unit not convertible to its {@linkplain #getSystemUnit() system unit}. Such units
- * may appear in derivative quantities. For example Celsius per meter is a unit of
- * gradient, which is common in atmospheric and oceanographic research.
+ * This interface supports the multiplication of offset units. The result is usually a unit not
+ * convertible to its {@linkplain #getSystemUnit() system unit}. Such units may appear in
+ * derivative quantities. For example Celsius per meter is a unit of gradient, which is common
+ * in atmospheric and oceanographic research.
  * <p/>
- * Units raised at non-integral powers are not supported. For example,
- * {@code LITRE.root(2)} raises an {@code ArithmeticException}, but
- * {@code HECTARE.root(2)} returns {@code HECTOMETRE} (100 metres).
+ * Units raised at non-integral powers are not supported. For example, {@code LITRE.root(2)}
+ * raises an {@code ArithmeticException}, but {@code HECTARE.root(2)} returns {@code HECTOMETRE}
+ * (100 metres).
  * <p/>
  * Unit instances shall be immutable.
  *
@@ -162,7 +165,16 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
    public abstract Unit<Q> getSystemUnit();
 
 
+   /**
+    * Returns the base units and their exponent whose product is this unit, or
+    * {@code null} if this unit is a base unit (not a product of existing units).
+    *
+    * @return the base units and their exponent making up this unit.
+    */
+   public abstract Map<? extends Unit<?>, Integer> getBaseUnits();
 
+
+   
    /**
     * Returns the converter from this unit to its system unit.
     *
@@ -233,13 +245,13 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
     * @return the converter from this unit to {@code that} unit.
     * @throws UnconvertibleException if a converter cannot be constructed.
     */
-   public final UnitConverter getConverterTo(Unit<?> that)
+   public final UnitConverter getConverterTo(Unit<Q> that)
       throws UnconvertibleException
    {
 
       if((this == that) || this.equals(that)) return AbstractConverter.IDENTITY; // Shortcut.
-      Unit<?> thisSystemUnit = this.getSystemUnit();
-      Unit<?> thatSystemUnit = that.getSystemUnit();
+      Unit<Q> thisSystemUnit = this.getSystemUnit();
+      Unit<Q> thatSystemUnit = that.getSystemUnit();
 
       if(thisSystemUnit.equals(thatSystemUnit)) {
          UnitConverter thisToSI = this.toSystemUnit();
@@ -247,18 +259,51 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
          return thatToSI.inverse().concatenate(thisToSI);
       }
 
-
-      // Use dimensional transforms.
-      if(!isCompatible(that)) {
-         throw new UnconvertibleException(this + " is not compatible with " + that);
+      try {
+         return getConverterToAny(that);
+      } catch (IncommensurableException e) {
+         throw new UnconvertibleException(e);
       }
-
-      // TODO Must impl the dimensional transform.. Two different Impls between old/new code
-      return null;
-
    }
 
-   // TODO getConverterToAny(Unit<?> that) throws IncommensurableException, UnconvertibleException;
+
+   /**
+    * Returns a converter from this unit to the specified unit of type unknown. This method
+    * can be used when the quantity type of the specified unit is* unknown at compile-time
+    * or when dimensional analysis allows for conversion between units of different type.
+    * <p/>
+    * To convert to a unit having the same parameterized type, {@link #getConverterTo(Unit)}
+    * is preferred (no checked exception raised).
+    *
+    * @param that
+    *          the unit to which to convert the numeric values.
+    * @return the converter from this unit to {@code that} unit.
+    * @throws IncommensurableException
+    *           if this unit is not {@linkplain #isCompatible(Unit) compatible} with
+    *           {@code that} unit.
+    * @throws UnconvertibleException
+    *           if a converter cannot be constructed.
+    *
+    * @see #getConverterTo(Unit)
+    * @see #isCompatible(Unit)
+    */   @SuppressWarnings("rawtypes")
+   public final UnitConverter getConverterToAny(Unit<?> that)
+      throws IncommensurableException, UnconvertibleException
+   {
+      if (!isCompatible(that))
+         throw new IncommensurableException(this + " is not compatible with " + that);
+      // compatible they must both be abstract units.
+      final DimensionalModel model = DimensionalModel.current();
+      Unit thisSystemUnit = this.getSystemUnit();
+      UnitConverter thisToDimension = model.getDimensionalTransform(thisSystemUnit.getDimension())
+         .concatenate(this.toSystemUnit());
+      Unit thatSystemUnit = that.getSystemUnit();
+      UnitConverter thatToDimension = model.getDimensionalTransform(thatSystemUnit.getDimension())
+         .concatenate(that.toSystemUnit());
+      return thatToDimension.inverse().concatenate(thisToDimension);
+   }
+
+
 
 
 
@@ -291,9 +336,6 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
    }
 
 
-   // TODO Add CompoundUnit???
-
-
    // Transformations
 
    /**
@@ -314,7 +356,7 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
     */
    public final Unit<Q> shift(Number offset)
    {
-      if (Calculus.currentNumberSystem().isZero(offset))
+      if (NumberSystem.current().isZero(offset))
          return this;
       return transform(new AddConverter(offset));
    }
@@ -337,7 +379,7 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
     */
    public final Unit<Q> multiply(Number factor)
    {
-      if (Calculus.currentNumberSystem().isOne(factor))
+      if (NumberSystem.current().isOne(factor))
          return this;
       return transform(MultiplyConverter.of(factor));
    }
@@ -358,7 +400,7 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
     */
    public final Unit<Q> divide(Number divisor)
    {
-      if (Calculus.currentNumberSystem().isOne(divisor))
+      if (NumberSystem.current().isOne(divisor))
          return this;
       Number factor = Calculator.of(divisor).reciprocal().peek();
       return transform(MultiplyConverter.of(factor));
@@ -402,8 +444,7 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
     */
    public final Unit<?> inverse()
    {
-      if (this.equals(ONE))
-         return this;
+      if (this.equals(ONE)) return this;
       return ProductUnit.ofQuotient(ONE, this);
    }
 
@@ -416,10 +457,8 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
     */
    public final Unit<?> multiply(Unit<?> that)
    {
-      if (this.equals(ONE))
-         return that;
-      if (that.equals(ONE))
-         return this;
+      if (this.equals(ONE)) return that;
+      if (that.equals(ONE)) return this;
       return ProductUnit.ofProduct(this, that);
    }
 
@@ -446,10 +485,8 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
     */
    public final Unit<?> root(int n)
    {
-      if (n > 0)
-         return ProductUnit.ofRoot(this, n);
-      else if (n == 0)
-         throw new ArithmeticException("Root's order of zero");
+      if (n > 0) return ProductUnit.ofRoot(this, n);
+       if (n == 0) throw new ArithmeticException("Root's order of zero");
       return ONE.divide(this.root(-n));
    }
 
@@ -461,10 +498,8 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
     */
    public Unit<?> pow(int n)
    {
-      if (n > 0)
-         return this.multiply(this.pow(n - 1));
-      else if (n == 0)
-         return ONE;
+      if (n > 0) return this.multiply(this.pow(n - 1));
+      if (n == 0) return ONE;
       // n < 0
       return ONE.divide(this.pow(-n));
    }
@@ -488,6 +523,7 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
 
 
 
+
    /**
     * Compares this unit to the specified unit. The default implementation compares
     * the symbol of both this unit and the specified unit.
@@ -497,15 +533,10 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
     */
    public int compareTo(Unit<Q> that)
    {
-      return compareToWithPossibleNullValues(getSymbol(), that.getSymbol());
-   }
-
-   private int compareToWithPossibleNullValues(String a, String b) {
-      if (a == null) {
-         return (b == null) ? 0 : -1;
-      } else {
-         return (b == null) ? 1 : a.compareTo(b);
-      }
+      String a = getSymbol();
+      String b = that.getSymbol();
+      if (a == null)  return (b == null) ? 0 : -1;
+      return (b == null) ? 1 : a.compareTo(b);
    }
 
 

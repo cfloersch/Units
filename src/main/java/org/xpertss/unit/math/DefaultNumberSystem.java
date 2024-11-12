@@ -1,32 +1,3 @@
-/*
- * Units of Measurement Reference Implementation
- * Copyright (c) 2005-2023, Jean-Marie Dautelle, Werner Keil, Otavio Santana.
- *
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions
- *    and the following disclaimer in the documentation and/or other materials provided with the distribution.
- *
- * 3. Neither the name of JSR-385, Indriya nor the names of their contributors may be used to endorse or promote products
- *    derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 package org.xpertss.unit.math;
 
 
@@ -41,13 +12,11 @@ import java.util.function.UnaryOperator;
 /**
  * {@link NumberSystem} implementation to support Java's built-in {@link Number}s and the
  * {@link RationalNumber} type.
- * 
- * @author Andi Huber
- * @author Werner Keil
- * @since 2.0
  */
 public class DefaultNumberSystem implements NumberSystem {
-    
+
+    static final NumberSystem INSTANCE = new DefaultNumberSystem();
+
     /**
      *  In order of increasing number type 'widening'.
      */
@@ -76,8 +45,8 @@ public class DefaultNumberSystem implements NumberSystem {
         private final Number one;
         private final Number zero;
         
-        private NumberType(boolean integerOnly, Class<? extends Number> type, 
-                Number one, Number zero) {
+        private NumberType(boolean integerOnly, Class<? extends Number> type, Number one, Number zero)
+        {
             
             this.integerOnly = integerOnly;
             this.type = type;
@@ -216,7 +185,7 @@ public class DefaultNumberSystem implements NumberSystem {
         } else {
             
             final MathContext mathContext = 
-                    new MathContext(Calculus.MATH_CONTEXT.getPrecision(), RoundingMode.FLOOR);
+                    new MathContext(MathContext.DECIMAL128.getPrecision(), RoundingMode.FLOOR);
             
             final BigDecimal decimal_x = (type_x == NumberType.RATIONAL)
                     ? ((RationalNumber) absX).bigDecimalValue()
@@ -402,13 +371,13 @@ public class DefaultNumberSystem implements NumberSystem {
             
         }
         if(number instanceof BigDecimal) {
-            return ((BigDecimal) number).pow(exponent, Calculus.MATH_CONTEXT);
+            return ((BigDecimal) number).pow(exponent, MathContext.DECIMAL128);
         }
         if(number instanceof RationalNumber) {
             ((RationalNumber) number).pow(exponent);
         }
         if(number instanceof Double || number instanceof Float) {
-            return toBigDecimal(number).pow(exponent, Calculus.MATH_CONTEXT);
+            return toBigDecimal(number).pow(exponent, MathContext.DECIMAL128);
         }
         throw unsupportedNumberType(number);
     }
@@ -700,11 +669,11 @@ public class DefaultNumberSystem implements NumberSystem {
         if(wide instanceof BigDecimal) {
             
             if(narrow instanceof BigDecimal) {
-                return ((BigDecimal) wide).add((BigDecimal) narrow, Calculus.MATH_CONTEXT);
+                return ((BigDecimal) wide).add((BigDecimal) narrow, MathContext.DECIMAL128);
             }
             
             if(narrow instanceof Double || narrow instanceof Float) {
-                return ((BigDecimal) wide).add(BigDecimal.valueOf(narrow.doubleValue()), Calculus.MATH_CONTEXT);
+                return ((BigDecimal) wide).add(BigDecimal.valueOf(narrow.doubleValue()), MathContext.DECIMAL128);
             }
             
             if(narrow instanceof RationalNumber) {
@@ -781,15 +750,15 @@ public class DefaultNumberSystem implements NumberSystem {
         if(wide instanceof BigDecimal) {
             
             if(narrow instanceof BigDecimal) {
-                return ((BigDecimal) wide).multiply((BigDecimal) narrow, Calculus.MATH_CONTEXT);
+                return ((BigDecimal) wide).multiply((BigDecimal) narrow, MathContext.DECIMAL128);
             }
             
             if(narrow instanceof BigInteger) {
-                return ((BigDecimal) wide).multiply(new BigDecimal((BigInteger)narrow), Calculus.MATH_CONTEXT);
+                return ((BigDecimal) wide).multiply(new BigDecimal((BigInteger)narrow), MathContext.DECIMAL128);
             }
             
             if(narrow instanceof Double || narrow instanceof Float) {
-                return ((BigDecimal) wide).multiply(BigDecimal.valueOf(narrow.doubleValue()), Calculus.MATH_CONTEXT);
+                return ((BigDecimal) wide).multiply(BigDecimal.valueOf(narrow.doubleValue()), MathContext.DECIMAL128);
             }
             
             if(narrow instanceof RationalNumber) {

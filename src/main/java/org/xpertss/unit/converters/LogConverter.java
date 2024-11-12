@@ -130,9 +130,9 @@ public final class LogConverter extends AbstractConverter { // implements
     protected Number convertWhenNotIdentity(Number value)
 	{
         return Calculator.of(value)
-              .log()
-              .divide(logOfBase)
-              .peek();
+								  .log()
+								  .divide(logOfBase)
+								  .peek();
     }
 
 	@Override
@@ -149,14 +149,11 @@ public final class LogConverter extends AbstractConverter { // implements
 	@Override
 	public int compareTo(UnitConverter o)
 	{
-		if (this == o) {
-			return 0;
+		if (this == o) return 0;
+		if (o instanceof LogConverter) {
+			// TODO Should this have worked with ExpConverter
+			return getValue().compareTo(String.valueOf(((LogConverter) o).getValue()));
 		}
-		/** TODO
-		if (o instanceof ValueSupplier) {
-			return getValue().compareTo(String.valueOf(((ValueSupplier<?>) o).getValue()));
-		}
-		 */
 		return -1;
 	}
 }

@@ -1,32 +1,3 @@
-/*
- * Units of Measurement API
- * Copyright (c) 2014-2019, Jean-Marie Dautelle, Werner Keil, Otavio Santana.
- *
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions
- *    and the following disclaimer in the documentation and/or other materials provided with the distribution.
- *
- * 3. Neither the name of JSR-385 nor the names of its contributors may be used to endorse or promote products
- *    derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 package xpertss.measure.format;
 
 import xpertss.measure.Quantity;
@@ -37,14 +8,8 @@ import java.text.ParsePosition;
  * Formats instances of {@link Quantity}.
  *
  * <h3><a id="synchronization">Synchronization</a></h3>
- * Instances of this class are not required to be thread-safe. It is recommended to use separate format instances for each thread. If multiple threads
- * access a format concurrently, it must be synchronized externally.
- *
- * @author <a href="mailto:werner@uom.technology">Werner Keil</a>
- * @author <a href="mailto:thodoris.bais@gmail.com">Thodoris Bais</a>
- *
- * @version 0.9, 22 Feb, 2019
- * @since 2.0
+ * Instances of this class are not required to be thread-safe. It is recommended to use separate format instances for each thread.
+ * If multiple threads access a format concurrently, it must be synchronized externally.
  *
  * @see Quantity
  */
