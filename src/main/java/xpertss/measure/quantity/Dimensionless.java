@@ -2,7 +2,7 @@ package xpertss.measure.quantity;
 
 import xpertss.measure.Quantity;
 import xpertss.measure.Unit;
-import xpertss.measure.units.SI;
+import xpertss.measure.ucum.SI;
 
 
 /**
@@ -10,6 +10,6 @@ import xpertss.measure.units.SI;
  */
 public interface Dimensionless extends Quantity<Dimensionless> {
 
-    public static final Unit<Dimensionless> UNIT = SI.ONE;
+    public static final Unit<Dimensionless> UNIT = Unit.ONE;
 
 }

@@ -9,7 +9,7 @@ package xpertss.measure.quantity;
 
 import xpertss.measure.Quantity;
 import xpertss.measure.Unit;
-import xpertss.measure.units.SI;
+import xpertss.measure.ucum.Base;
 
 
 /**
@@ -21,6 +21,6 @@ import xpertss.measure.units.SI;
  */
 public interface LuminousIntensity extends Quantity<LuminousIntensity> {
 
-   public static final Unit<LuminousIntensity> UNIT = SI.CANDELA;
+   public static final Unit<LuminousIntensity> UNIT = Base.CANDELA;
 
 }

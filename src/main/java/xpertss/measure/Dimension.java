@@ -49,6 +49,11 @@ public class Dimension {
    public static final Dimension ELECTRIC_CURRENT = new Dimension('I');
 
    /**
+    * Holds electric charge dimension (Q).
+    */
+   public static final Dimension ELECTRIC_CHARGE = new Dimension('Q');
+
+   /**
     * Holds temperature dimension (Θ).
     */
    public static final Dimension TEMPERATURE = new Dimension('\u0398');
@@ -62,6 +67,9 @@ public class Dimension {
     * Holds luminous intensity dimension (J).
     */
    public static final Dimension LUMINOUS_INTENSITY = new Dimension('J');
+
+
+   // TODO In UCUM there is PLANE_ANGLE (radian) with no symbol and ELECTRIC_CHARGE (coulomb) with Q symbol
 
 
    /**

@@ -2,7 +2,7 @@ package xpertss.measure.quantity;
 
 import xpertss.measure.Quantity;
 import xpertss.measure.Unit;
-import xpertss.measure.units.SI;
+import xpertss.measure.ucum.Base;
 
 
 /**
@@ -11,6 +11,6 @@ import xpertss.measure.units.SI;
  */
 public interface Temperature extends Quantity<Temperature> {
 
-   public static final Unit<Temperature> UNIT = SI.KELVIN;
+   public static final Unit<Temperature> UNIT = Base.KELVIN;
 
 }

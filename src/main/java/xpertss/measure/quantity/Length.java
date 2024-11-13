@@ -2,7 +2,7 @@ package xpertss.measure.quantity;
 
 import xpertss.measure.Quantity;
 import xpertss.measure.Unit;
-import xpertss.measure.units.SI;
+import xpertss.measure.ucum.Base;
 
 /**
  * Extent of something along its greatest dimension or the extent of space between
@@ -17,7 +17,7 @@ import xpertss.measure.units.SI;
 public interface Length extends Quantity<Length> {
 
 
-   public static final Unit<Length> UNIT = SI.METRE;
+   public static final Unit<Length> UNIT = Base.METRE;
 
 
    // TODO How can this be called? There is no impl of this to the best of my knowledge?

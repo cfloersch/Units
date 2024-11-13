@@ -2,7 +2,7 @@ package xpertss.measure.quantity;
 
 import xpertss.measure.Quantity;
 import xpertss.measure.Unit;
-import xpertss.measure.units.SI;
+import xpertss.measure.ucum.Base;
 
 
 /**
@@ -22,6 +22,6 @@ import xpertss.measure.units.SI;
  */
 public interface Time extends Quantity<Time> {
 
-   public static final Unit<Time> UNIT = SI.SECOND;
+   public static final Unit<Time> UNIT = Base.SECOND;
 
 }

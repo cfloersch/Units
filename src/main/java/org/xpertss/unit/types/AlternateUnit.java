@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * This class represents units used in expressions to distinguish between quantities of
- * a different nature but of the same dimensions.
+ * This class represents units used in expressions to distinguish between quantities of a different
+ * nature but of the same dimensions.
  * <p/>
  * Examples of alternate units:
  * <code>
@@ -58,7 +58,7 @@ public final class AlternateUnit<Q extends Quantity<Q>> extends AbstractUnit<Q> 
 	 *                                  {@link Unit#isSystemUnit() system
 	 *                                  unit}
 	 */
-	AlternateUnit(Unit<?> parentUnit, String symbol, String name)
+	public AlternateUnit(Unit<?> parentUnit, String symbol, String name)
 	{
 		this(parentUnit, symbol);
 		this.name = name;

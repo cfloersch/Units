@@ -2,7 +2,7 @@ package xpertss.measure.quantity;
 
 import xpertss.measure.Quantity;
 import xpertss.measure.Unit;
-import xpertss.measure.units.SI;
+import xpertss.measure.ucum.Base;
 
 
 /**
@@ -15,6 +15,6 @@ import xpertss.measure.units.SI;
  */
 public interface Angle extends Quantity<Angle> {
 
-   public static final Unit<Angle> UNIT = SI.RADIAN;
+   public static final Unit<Angle> UNIT = Base.RADIAN;
 
 }

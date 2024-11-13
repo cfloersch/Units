@@ -2,7 +2,7 @@ package xpertss.measure.quantity;
 
 import xpertss.measure.Quantity;
 import xpertss.measure.Unit;
-import xpertss.measure.units.SI;
+import xpertss.measure.ucum.SI;
 
 
 /**
@@ -16,6 +16,6 @@ import xpertss.measure.units.SI;
  */
 public interface Acceleration extends Quantity<Acceleration> {
 
-   public static final Unit<Acceleration> UNIT = SI.METRES_PER_SQUARE_SECOND;
+   public static final Unit<Acceleration> UNIT = SI.METRE_PER_SQUARE_SECOND;
 
 }
