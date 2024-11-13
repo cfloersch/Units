@@ -3,35 +3,12 @@ package xpertss.measure.ucum;
 import org.xpertss.unit.converters.AddConverter;
 import org.xpertss.unit.math.RationalNumber;
 import org.xpertss.unit.types.AlternateUnit;
+import org.xpertss.unit.types.BaseUnit;
 import org.xpertss.unit.types.ProductUnit;
 import org.xpertss.unit.types.TransformedUnit;
+import xpertss.measure.Dimension;
 import xpertss.measure.Unit;
-import xpertss.measure.quantity.Acceleration;
-import xpertss.measure.quantity.AmountOfSubstance;
-import xpertss.measure.quantity.Area;
-import xpertss.measure.quantity.CatalyticActivity;
-import xpertss.measure.quantity.ElectricCapacitance;
-import xpertss.measure.quantity.ElectricConductance;
-import xpertss.measure.quantity.ElectricCurrent;
-import xpertss.measure.quantity.ElectricInductance;
-import xpertss.measure.quantity.ElectricPotential;
-import xpertss.measure.quantity.ElectricResistance;
-import xpertss.measure.quantity.Energy;
-import xpertss.measure.quantity.Force;
-import xpertss.measure.quantity.Frequency;
-import xpertss.measure.quantity.Illuminance;
-import xpertss.measure.quantity.LuminousFlux;
-import xpertss.measure.quantity.MagneticFlux;
-import xpertss.measure.quantity.MagneticFluxDensity;
-import xpertss.measure.quantity.Power;
-import xpertss.measure.quantity.Pressure;
-import xpertss.measure.quantity.RadiationDoseAbsorbed;
-import xpertss.measure.quantity.RadiationDoseEffective;
-import xpertss.measure.quantity.Radioactivity;
-import xpertss.measure.quantity.SolidAngle;
-import xpertss.measure.quantity.Speed;
-import xpertss.measure.quantity.Temperature;
-import xpertss.measure.quantity.Volume;
+import xpertss.measure.quantity.*;
 
 import static xpertss.measure.MetricPrefix.KILO;
 import static xpertss.measure.ucum.Base.CANDELA;
@@ -44,12 +21,10 @@ import static xpertss.measure.ucum.Base.SECOND;
 
 /**
  * International System of Units
- *
+ * <p/>
  * SI UNITS: UCUM 4.3 §30
  */
-public class SI {
-
-
+public final class SI {
 
 
    /**
@@ -71,10 +46,8 @@ public class SI {
     * <dl>
     * <dt><span class="strong">Implementation Note:</span></dt><dd>SI Base Unit</dd>
     * </dl>
-    * TODO How to give this dimension? Is there another unit that is the base for AMOUNT_OF_SUBSTANCE
     */
-   public static final Unit<AmountOfSubstance> MOLE = AlternateUnit.of(Unit.ONE.multiply(6.0221367E23), "mol", "Mole");
-   // new BaseUnit<>("mol", "Mole", Dimension.AMOUNT_OF_SUBSTANCE)
+   public static final Unit<AmountOfSubstance> MOLE = new BaseUnit<>("mol", "Mole", Dimension.AMOUNT_OF_SUBSTANCE);
 
 
 
@@ -318,6 +291,118 @@ public class SI {
     * @see <a href="https://en.wikipedia.org/wiki/Kilometres_per_hour"> Wikipedia: Kilometres per hour</a>
     */
    public static final Unit<Speed> KILOMETRE_PER_HOUR = METRE_PER_SECOND.multiply(RationalNumber.of(5, 18)).asType(Speed.class);
+
+
+
+
+
+   /**
+    * The SI unit for action quantities (standard name <code>J.s</code>).
+    */
+   public static final Unit<Action> JOULE_SECOND = new ProductUnit<Action>(JOULE.multiply(SECOND));
+
+
+
+
+
+
+   /**
+    * The SI unit for electric permittivity (standard name <code>ε</code>,
+    * <code>F/m </code> or <code>F·m−1</code>). In electromagnetism, absolute
+    * permittivity is the measure of resistance that is encountered when forming an
+    * electric field in a medium.
+    */
+   public static final Unit<ElectricPermittivity> FARAD_PER_METRE = new ProductUnit<>(FARAD.divide(METRE));
+
+   /**
+    * The SI unit for electrical conductivity, <code>S/m</code>).
+    * @see <a href="https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity">Wikipedia: Electrical resistivity and conductivity</a>
+    */
+   public static final Unit<ElectricalConductivity> SIEMENS_PER_METRE = new ProductUnit<>(SIEMENS.divide(METRE));
+
+   /**
+    * The SI unit for electrical resistivity, <code>Ω⋅m</code>).
+    * @see <a href="https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity">Wikipedia: Electrical resistivity and conductivity</a>
+    */
+   public static final Unit<ElectricalResistivity> OHM_METRE = new ProductUnit<>(OHM.multiply(METRE));
+
+   /**
+    * The SI unit for magnetic permeability quantities (standard name
+    * <code>N/A2</code>).
+    */
+   public static final Unit<MagneticPermeability> NEWTON_PER_SQUARE_AMPERE = new ProductUnit<>(NEWTON.divide(AMPERE.pow(2)));
+
+   /**
+    * The SI unit for wave number quantities (standard name <code>1/m</code>).
+    */
+   public static final Unit<WaveNumber> RECIPROCAL_METRE = new ProductUnit<>(METRE.pow(-1));
+
+   /**
+    * The SI unit for dynamic viscosity quantities (standard name
+    * <code>Pa.s</code>).
+    */
+   public static final Unit<DynamicViscosity> PASCAL_SECOND = new ProductUnit<>(PASCAL.multiply(SECOND));
+
+   /**
+    * Luminance is a photometric measure of the luminous intensity per unit area of
+    * light travelling in a given direction. It describes the amount of light that
+    * passes through, is emitted or reflected from a particular area, and falls
+    * within a given solid angle. The SI unit for luminance is candela per square
+    * metre (<code>cd/m2</code>).
+    *
+    * @see <a href="https://en.wikipedia.org/wiki/Luminance"> Wikipedia:
+    *      Luminance</a>
+    */
+   public static final Unit<Luminance> CANDELA_PER_SQUARE_METRE = new ProductUnit<>(CANDELA.divide(SQUARE_METRE));
+
+   /**
+    * The SI unit for kinematic viscosity quantities (standard name
+    * <code>m2/s"</code>).
+    */
+   public static final Unit<KinematicViscosity> SQUARE_METRE_PER_SECOND = new ProductUnit<>(SQUARE_METRE.divide(SECOND));
+
+   /**
+    * The SI unit for magnetic field strength quantities (standard name
+    * <code>A/m"</code>).
+    */
+   public static final Unit<MagneticFieldStrength> AMPERE_PER_METRE = new ProductUnit<>(AMPERE.divide(METRE));
+
+   /**
+    * The SI unit for ionizing radiation quantities (standard name
+    * <code>C/kg"</code>).
+    */
+   public static final Unit<IonizingRadiation> COULOMB_PER_KILOGRAM = new ProductUnit<>(COULOMB.divide(KILO(GRAM)));
+
+   /**
+    * The SI unit for radiant intensity (standard name <code>W/sr</code>).
+    */
+   public static final Unit<RadiantIntensity> WATT_PER_STERADIAN = WATT.divide(STERADIAN).asType(RadiantIntensity.class);
+
+   /**
+    * The SI unit for radiance (standard name <code>W⋅sr−1⋅m−2</code>).
+    */
+   public static final Unit<Radiance> WATT_PER_STERADIAN_PER_SQUARE_METRE = WATT_PER_STERADIAN.divide(SQUARE_METRE).asType(Radiance.class);
+
+   /**
+    * The SI unit for intensity (standard name <code>W/m<sup>2</sup></code>).
+    */
+   public static final Unit<Intensity> WATT_PER_SQUARE_METRE = WATT.divide(SQUARE_METRE).asType(Intensity.class);
+
+   /**
+    * The SI unit of angular speed (standard name <code>rad/s</code>).
+    *
+    * TODO This has a name and symbol?
+    * @see AngularSpeed
+    */
+   public static final Unit<AngularSpeed> RADIAN_PER_SECOND = new ProductUnit<>(RADIAN.divide(SECOND));
+
+   /**
+    * The SI unit of angular acceleration (standard name <code>rad/s²</code>).
+    *
+    * @see AngularAcceleration
+    */
+   public static final Unit<AngularAcceleration> RADIAN_PER_SQUARE_SECOND = new ProductUnit<>(RADIAN_PER_SECOND.divide(SECOND));
+
 
 
 

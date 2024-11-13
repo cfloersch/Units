@@ -31,12 +31,12 @@ import static xpertss.measure.ucum.SI.SQUARE_METRE;
  * Unified Code for Units of Measure (UCUM)
  * <p/>
  * The UCUM Base Units, Derived Units, Other Units
- *
+ * <p/>
  * BASE UNITS: UCUM 4.2 §28
  * DIMENSIONLESS DERIVED UNITS: UCUM 4.3 §29
  * OTHER UNITS FROM ISO 1000, ISO 2955, AND ANSI X3.50: UCUM 4.3 §31
  */
-public class Base {
+public final class Base {
 
    //////////////////////////////
    // BASE UNITS: UCUM 4.2 §28 //
@@ -211,15 +211,17 @@ public class Base {
    public static final Unit<Angle> MINUTE_ANGLE = DEGREE.divide(60);
    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Angle> SECOND_ANGLE = MINUTE_ANGLE.divide(60);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
-   public static final Unit<Volume> LITER = new TransformedUnit<Volume>("l", "Litre", CUBIC_METRE, MultiplyConverter.ofRational(1, 1000));
+
+
    /**
-    * As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. Liter has
-    * <b>two</b> definitions.
+    * As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. Liter has <b>two</b> definitions.
     *
     * @see <a href="http://unitsofmeasure.org/ucum.html#iso1000">UCUM Table 5</a>
     */
+   public static final Unit<Volume> LITER = new TransformedUnit<Volume>("l", "Litre", CUBIC_METRE, MultiplyConverter.ofRational(1, 1000));
    public static final Unit<Volume> LITER_DM3 = new AlternateUnit<>(DECI(METRE).pow(3).asType(Volume.class), "liter", "l");
+
+
    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Area> ARE = new AlternateUnit<>(SQUARE_METRE.multiply(100), "are", "a");
    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
@@ -259,7 +261,5 @@ public class Base {
    public static final Unit<Length> ASTRONOMIC_UNIT = new TransformedUnit<>("AU", "Astronomical Unit", METRE, MultiplyConverter.of(149597870700d));
    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Length> PARSEC = new AlternateUnit<>(METRE.multiply(3.085678E16), "pc", "Parsec");
-
-
 
 }
