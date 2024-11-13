@@ -1,6 +1,5 @@
 package org.xpertss.unit.types;
 
-import org.xpertss.unit.AbstractUnit;
 import org.xpertss.unit.converters.AbstractConverter;
 import xpertss.measure.Dimension;
 import xpertss.measure.Quantity;
@@ -21,7 +20,7 @@ import java.util.Objects;
  *
  * @param <Q>  The type of the quantity measured by this unit.
  */
-public final class ProductUnit<Q extends Quantity<Q>> extends AbstractUnit<Q> {
+public final class ProductUnit<Q extends Quantity<Q>> extends Unit<Q> {
 
 
     /**

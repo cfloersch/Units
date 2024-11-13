@@ -486,7 +486,7 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
    public final Unit<?> root(int n)
    {
       if (n > 0) return ProductUnit.ofRoot(this, n);
-       if (n == 0) throw new ArithmeticException("Root's order of zero");
+      if (n == 0) throw new ArithmeticException("Root's order of zero");
       return ONE.divide(this.root(-n));
    }
 

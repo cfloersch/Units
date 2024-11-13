@@ -1,6 +1,5 @@
 package org.xpertss.unit.types;
 
-import org.xpertss.unit.AbstractUnit;
 import xpertss.measure.*;
 
 import java.util.Map;
@@ -17,7 +16,7 @@ import java.util.Objects;
  *   Unit<Pressure> PASCAL = AlternateUnit.of(NEWTON.divide(METRE.pow(2), "Pa").asType(Pressure.class);
  * </code>
  */
-public final class AlternateUnit<Q extends Quantity<Q>> extends AbstractUnit<Q> {
+public final class AlternateUnit<Q extends Quantity<Q>> extends Unit<Q> {
 
 	private String name;
 
