@@ -12,6 +12,8 @@ import static xpertss.measure.ucum.SI.*;
  * UCUM Natural Units
  * <p/>
  * NATURAL UNITS: UCUM 4.3 §32
+ *
+ * TODO Come back and give names/symbols to Units as appropriate
  */
 public final class Natural {
 

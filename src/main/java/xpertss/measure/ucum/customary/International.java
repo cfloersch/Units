@@ -14,22 +14,18 @@ import static xpertss.measure.ucum.Base.*;
  * International Customary
  * <p/>
  * INTERNATIONAL CUSTOMARY UNITS: UCUM 4.4 §34
+ *
+ * TODO Come back and give names/symbols to Units as appropriate
  */
 public final class International {
 
     /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
     public static final Unit<Length> INCH_INTERNATIONAL = CENTI(METRE).multiply(254).divide(100);
-    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
     public static final Unit<Length> FOOT_INTERNATIONAL = INCH_INTERNATIONAL.multiply(12);
-    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
     public static final Unit<Length> YARD_INTERNATIONAL = FOOT_INTERNATIONAL.multiply(3);
-    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
     public static final Unit<Length> MILE_INTERNATIONAL = FOOT_INTERNATIONAL.multiply(5280);
-    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
     public static final Unit<Length> FATHOM_INTERNATIONAL = FOOT_INTERNATIONAL.multiply(6);
-    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
     public static final Unit<Length> NAUTICAL_MILE_INTERNATIONAL = METRE.multiply(1852);
-    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
     public static final Unit<Speed> KNOT_INTERNATIONAL = new ProductUnit<>(NAUTICAL_MILE_INTERNATIONAL.divide(HOUR));
 
 
