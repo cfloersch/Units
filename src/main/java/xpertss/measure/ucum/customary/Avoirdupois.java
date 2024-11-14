@@ -27,10 +27,6 @@ public final class Avoirdupois {
    public static final Unit<Mass> STONE = POUND.multiply(14);
 
 
-   // CONTINUED FROM SECTION §32
-   // contains a forward reference to POUND, so we had to move it here, below
-   // section §39
-   public static final Unit<Force> POUND_FORCE = POUND.multiply(ACCELERATION_OF_FREEFALL).asType(Force.class);
 
 
 }

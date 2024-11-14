@@ -1,10 +1,44 @@
-Quantity changes from interface to AbstractQuantity - It utilizes impl NumericQuantity from private package
+Units created from Prefix like KILO(GRAM) do not output a traditional symbol.
+For example the above .getSymbol() => kg
+
+Somehow the prefix symbol needs to be carried forward to the new unit so that
+we can prefix the base unit's symbol.
 
 ----------------------------
 
-AbstractUnit may go away entirely with that functionality being encapsulated in Unit
+I cannot use Prefixed Units in AlternateUnit. Is that a real need or is it
+just conceptual?
 
 ----------------------------
+
+Quantity
+  Absement - SI
+  AreaDensity - SI
+  Density - None
+  Impulse - SI
+  Level - UCUM (decibel)
+  LuminousEfficacy - SI
+  Momentum - SI
+  RadiationDoseAbsorbedRate - SI
+
+UCUM Units
+  Chemical
+  Clinical Medicine is only partially implemented
+  Levels
+
+----------------------------
+
+Many units are named with their Type. For example
+  SCRUPLE_APOTHECARY Exists inside a Class of TYPE Apothecaries
+
+would it make more sense to fully qualify it as
+  Apothecaries.SCRUPLE
+to help delineate between similarly named items?
+
+----------------------------
+
+Lots of UCUM units which do have symbols not actually defining
+them
 
 
 

@@ -9,8 +9,8 @@ import xpertss.measure.quantity.Temperature;
 import static xpertss.measure.MetricPrefix.KILO;
 import static xpertss.measure.ucum.Base.KELVIN;
 import static xpertss.measure.ucum.Base.SECOND;
+import static xpertss.measure.ucum.Natural.POUND_FORCE;
 import static xpertss.measure.ucum.SI.JOULE;
-import static xpertss.measure.ucum.customary.Avoirdupois.POUND_FORCE;
 import static xpertss.measure.ucum.customary.International.FOOT_INTERNATIONAL;
 
 /**
@@ -41,5 +41,6 @@ public final class Legacy {
    public static final Unit<Energy> BTU = BTU_THERMOCHEMICAL;
    public static final Unit<Power> HORSEPOWER = new ProductUnit<Power>(FOOT_INTERNATIONAL.multiply(POUND_FORCE).divide(SECOND));
 
+   // TODO Tax and Denier??
 
 }

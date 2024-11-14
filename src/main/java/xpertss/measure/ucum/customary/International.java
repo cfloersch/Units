@@ -33,17 +33,17 @@ public final class International {
      * @deprecated Per [http://unitsofmeasure.org/ucum.html#para-34](§34 international customary units)
      */
     public static final Unit<Area> SQUARE_INCH_INTERNATIONAL =
-            new ProductUnit<Area>(INCH_INTERNATIONAL.pow(2));
+            new ProductUnit<>(INCH_INTERNATIONAL.pow(2));
     public static final Unit<Area> SQUARE_FOOT_INTERNATIONAL =
-            new ProductUnit<Area>(FOOT_INTERNATIONAL.pow(2));
+            new ProductUnit<>(FOOT_INTERNATIONAL.pow(2));
     public static final Unit<Area> SQUARE_YARD_INTERNATIONAL =
-            new ProductUnit<Area>(YARD_INTERNATIONAL.pow(2));
+            new ProductUnit<>(YARD_INTERNATIONAL.pow(2));
     public static final Unit<Volume> CUBIC_INCH_INTERNATIONAL =
-            new ProductUnit<Volume>(INCH_INTERNATIONAL.pow(3));
+            new ProductUnit<>(INCH_INTERNATIONAL.pow(3));
     public static final Unit<Volume> CUBIC_FOOT_INTERNATIONAL =
-            new ProductUnit<Volume>(FOOT_INTERNATIONAL.pow(3));
+            new ProductUnit<>(FOOT_INTERNATIONAL.pow(3));
     public static final Unit<Volume> CUBIC_YARD_INTERNATIONAL =
-            new ProductUnit<Volume>(YARD_INTERNATIONAL.pow(3));
+            new ProductUnit<>(YARD_INTERNATIONAL.pow(3));
 
 
 

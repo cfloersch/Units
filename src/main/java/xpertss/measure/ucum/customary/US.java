@@ -49,7 +49,7 @@ public final class US {
 
     public static final Unit<Area> SQUARE_MILE_US_SURVEY = new ProductUnit<>(MILE_US_SURVEY.pow(2));
     public static final Unit<Area> SECTION_US_SURVEY = new ProductUnit<>(MILE_US_SURVEY.pow(2));
-    public static final Unit<Area> TOWNSHP_US_SURVEY = AlternateUnit.of(SECTION_US_SURVEY.multiply(36), "twp", "township");
+    public static final Unit<Area> TOWNSHIP_US_SURVEY = AlternateUnit.of(SECTION_US_SURVEY.multiply(36), "twp", "township");
     public static final Unit<Length> MIL_US_SURVEY = AlternateUnit.of(INCH_US_SURVEY.divide(1000), "mil_us", "mil");
 
 

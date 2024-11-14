@@ -515,6 +515,7 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
     */
    public Unit<Q> prefix(Prefix prefix)
    {
+      // Should we treat them as TransformedUnits or a special case of alternate unit?
       return this.transform(MultiplyConverter.ofPrefix(prefix));
    }
 

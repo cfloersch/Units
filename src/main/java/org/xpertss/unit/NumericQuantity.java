@@ -10,6 +10,7 @@ import org.xpertss.unit.converters.AbstractConverter;
 import org.xpertss.unit.math.Calculator;
 import org.xpertss.unit.math.NumberSystem;
 import org.xpertss.unit.utils.OperandMode;
+import xpertss.measure.format.QuantityFormat;
 import xpertss.measure.Quantity;
 import xpertss.measure.Unit;
 import xpertss.measure.UnitConverter;

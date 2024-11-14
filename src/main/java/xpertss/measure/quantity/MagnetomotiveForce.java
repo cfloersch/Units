@@ -14,6 +14,6 @@ import xpertss.measure.ucum.SI;
  */
 public interface MagnetomotiveForce extends Quantity<MagnetomotiveForce> {
 
-   public static final Unit<MagnetomotiveForce> UNIT = SI.AMPERE_TURN;
+   // TODO public static final Unit<MagnetomotiveForce> UNIT = AMPERE_TURN;
 
 }

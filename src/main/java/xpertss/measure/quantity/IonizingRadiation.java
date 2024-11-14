@@ -16,6 +16,6 @@ import xpertss.measure.ucum.SI;
  */
 public interface IonizingRadiation extends Quantity<IonizingRadiation> {
 
-   public static final Unit<IonizingRadiation> UNIT = SI.COULOMBS_PER_KILOGRAM;
+   // TODO public static final Unit<IonizingRadiation> UNIT = COULOMBS_PER_KILOGRAM;
 
 }

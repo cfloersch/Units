@@ -34,7 +34,7 @@ public final class IT {
    /**
     * The SI unit for binary information rate (standard name <code>bit/s</code>).
     */
-   protected static final ProductUnit<InformationRate> BITS_PER_SECOND = new ProductUnit<>(BIT.divide(SECOND));
+   public static final ProductUnit<InformationRate> BITS_PER_SECOND = new ProductUnit<>(BIT.divide(SECOND));
    public static final Unit<InformationRate> BAUD = BITS_PER_SECOND;
 
 }

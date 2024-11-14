@@ -11,9 +11,11 @@ import xpertss.measure.ucum.SI;
  *
  * @see <a href="http://en.wikipedia.org/wiki/Electric_permittivity">Wikipedia: Electric
  *   Permittivity</a>
+ *
+ *   TODO Beyond Spec
  */
 public interface ElectricPermittivity extends Quantity<ElectricPermittivity> {
 
-   public static final Unit<ElectricPermittivity> UNIT = SI.FARADS_PER_METRE;
+   // TODO public static final Unit<ElectricPermittivity> UNIT = FARADS_PER_METRE;
 
 }

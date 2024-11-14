@@ -1,6 +1,7 @@
 package xpertss.measure.ucum;
 
 import org.xpertss.unit.converters.AddConverter;
+import org.xpertss.unit.converters.MultiplyConverter;
 import org.xpertss.unit.math.RationalNumber;
 import org.xpertss.unit.types.AlternateUnit;
 import org.xpertss.unit.types.BaseUnit;
@@ -11,13 +12,7 @@ import xpertss.measure.Unit;
 import xpertss.measure.quantity.*;
 
 import static xpertss.measure.MetricPrefix.KILO;
-import static xpertss.measure.ucum.Base.CANDELA;
-import static xpertss.measure.ucum.Base.COULOMB;
-import static xpertss.measure.ucum.Base.GRAM;
-import static xpertss.measure.ucum.Base.KELVIN;
-import static xpertss.measure.ucum.Base.METRE;
-import static xpertss.measure.ucum.Base.RADIAN;
-import static xpertss.measure.ucum.Base.SECOND;
+import static xpertss.measure.ucum.Base.*;
 
 /**
  * International System of Units
@@ -51,6 +46,10 @@ public final class SI {
 
 
 
+   // Derived Units
+
+
+
    /**
     * The SI unit for solid angle quantities (standard name <code>sr</code>). One
     * steradian is the solid angle subtended at the center of a sphere by an area
@@ -76,8 +75,12 @@ public final class SI {
     * required to give a mass of 1 kilogram an Force of 1 metre per second per
     * second. It is named after the English mathematician and physicist Sir Isaac
     * Newton (1642-1727).
+    *
+    * TODO Fix this.. I have to have NEWTON = AlternateUnit and it MUST be KILOGRAM not GRAM..
     */
-   public static final Unit<Force> NEWTON = new AlternateUnit<>(METRE.multiply(KILO(GRAM)).divide(SECOND.pow(2)), "N", "Newton");
+   public static final Unit<Force> NEWTON = new AlternateUnit<>(GRAM.multiply(THOUSANDS).multiply(METRE).divide(SECOND.pow(2)), "N", "Newton");
+   //public static final Unit<Force> NEWTON = new AlternateUnit<>(METRE.multiply(GRAM).divide(SECOND), "N", "Newton");
+//   public static final Unit<Force> NEWTON = new AlternateUnit<>(METRE.multiply(KILO(GRAM)).divide(SECOND.pow(2)), "N", "Newton");
 
    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    /**
@@ -85,7 +88,7 @@ public final class SI {
     * is equal to one newton per square meter. It is named after the French
     * philosopher and mathematician Blaise Pascal (1623-1662).
     */
-   public static final Unit<Pressure> PASCAL =new AlternateUnit<>(NEWTON.divide(METRE.pow(2)), "Pa", "Pascal");
+   public static final Unit<Pressure> PASCAL = new AlternateUnit<>(NEWTON.divide(METRE.pow(2)), "Pa", "Pascal");
 
    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    /**
@@ -231,8 +234,11 @@ public final class SI {
     * name <code>Gy</code>). One gray is equal to the dose of one joule of energy
     * absorbed per one kilogram of matter. It is named after the British physician
     * L. H. Gray (1905-1965).
+    *
+    * TODO Fix this
     */
-   public static final Unit<RadiationDoseAbsorbed> GRAY = new AlternateUnit<>(JOULE.divide(KILO(GRAM)), "Gy", "Gray");
+   //public static final Unit<RadiationDoseAbsorbed> GRAY = new AlternateUnit<>(JOULE.divide(KILO(GRAM)), "Gy", "Gray");
+   public static final Unit<RadiationDoseAbsorbed> GRAY = new AlternateUnit<>(JOULE.divide(GRAM), "Gy", "Gray");
 
    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    /**
@@ -240,8 +246,10 @@ public final class SI {
     * is equal to the actual dose, in grays, multiplied by a "quality factor" which
     * is larger for more dangerous forms of radiation. It is named after the Swedish
     * physicist Rolf Sievert (1898-1966).
+    *
+    * TODO Fix this
     */
-   public static final Unit<RadiationDoseEffective> SIEVERT = new AlternateUnit<>(JOULE.divide(KILO(GRAM)), "Sv", "Sievert");
+   public static final Unit<RadiationDoseEffective> SIEVERT = new AlternateUnit<>(JOULE.divide(GRAM), "Sv", "Sievert");
 
 
 
@@ -376,17 +384,20 @@ public final class SI {
    /**
     * The SI unit for radiant intensity (standard name <code>W/sr</code>).
     */
-   public static final Unit<RadiantIntensity> WATT_PER_STERADIAN = WATT.divide(STERADIAN).asType(RadiantIntensity.class);
+   @SuppressWarnings("unchecked")
+   public static final Unit<RadiantIntensity> WATT_PER_STERADIAN = (Unit<RadiantIntensity>) WATT.divide(STERADIAN);
 
    /**
     * The SI unit for radiance (standard name <code>W⋅sr−1⋅m−2</code>).
     */
-   public static final Unit<Radiance> WATT_PER_STERADIAN_PER_SQUARE_METRE = WATT_PER_STERADIAN.divide(SQUARE_METRE).asType(Radiance.class);
+   @SuppressWarnings("unchecked")
+   public static final Unit<Radiance> WATT_PER_STERADIAN_PER_SQUARE_METRE = (Unit<Radiance>) WATT_PER_STERADIAN.divide(SQUARE_METRE);
 
    /**
     * The SI unit for intensity (standard name <code>W/m<sup>2</sup></code>).
     */
-   public static final Unit<Intensity> WATT_PER_SQUARE_METRE = WATT.divide(SQUARE_METRE).asType(Intensity.class);
+   @SuppressWarnings("unchecked")
+   public static final Unit<Intensity> WATT_PER_SQUARE_METRE = (Unit<Intensity>) WATT.divide(SQUARE_METRE);
 
    /**
     * The SI unit of angular speed (standard name <code>rad/s</code>).

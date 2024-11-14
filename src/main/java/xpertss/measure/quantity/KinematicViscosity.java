@@ -15,6 +15,6 @@ import xpertss.measure.ucum.SI;
  */
 public interface KinematicViscosity extends Quantity<KinematicViscosity> {
 
-   public static final Unit<KinematicViscosity> UNIT = SI.SQUARE_METRES_PER_SECOND;
+   // TODO public static final Unit<KinematicViscosity> UNIT = SQUARE_METRES_PER_SECOND;
 
 }

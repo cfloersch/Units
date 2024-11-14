@@ -8,9 +8,11 @@ import xpertss.measure.ucum.SI;
 /**
  * Magnetic field strength. The system unit for this quantity is "A/m"
  * (ampere per meter).
+ *
+ * TODO Beyond Spec
  */
 public interface MagneticFieldStrength extends Quantity<MagneticFieldStrength> {
 
-   public static final Unit<MagneticFieldStrength> UNIT = SI.AMPERES_PER_METRE;
+   // TODO public static final Unit<MagneticFieldStrength> UNIT = AMPERES_PER_METRE;
 
 }

@@ -167,25 +167,15 @@ public final class Base {
    ///////////////////////////////////////////////
    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Dimensionless> TRILLIONS = Unit.ONE.multiply(1000000000000L);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Dimensionless> BILLIONS = Unit.ONE.multiply(1000000000);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Dimensionless> MILLIONS = Unit.ONE.multiply(1000000);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Dimensionless> THOUSANDS = Unit.ONE.multiply(1000);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Dimensionless> HUNDREDS = Unit.ONE.multiply(100);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Dimensionless> PI = Unit.ONE.transform(MultiplyConverter.ofPiExponent(1));
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Dimensionless> PERCENT = Unit.ONE.divide(100);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Dimensionless> PER_THOUSAND = Unit.ONE.divide(1000);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Dimensionless> PER_MILLION = Unit.ONE.divide(1000000);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Dimensionless> PER_BILLION = Unit.ONE.divide(1000000000);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Dimensionless> PER_TRILLION = Unit.ONE.divide(1000000000000L);
 
 
@@ -203,15 +193,10 @@ public final class Base {
    // terms of DEGREE
    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Angle> DEGREE = new ProductUnit<>(PI.multiply(RADIAN.divide(180)));
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Angle> GRADE = DEGREE.multiply(0.9);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Angle> GON = GRADE;
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Angle> MINUTE_ANGLE = DEGREE.divide(60);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Angle> SECOND_ANGLE = MINUTE_ANGLE.divide(60);
-
 
    /**
     * As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. Liter has <b>two</b> definitions.
@@ -219,47 +204,30 @@ public final class Base {
     * @see <a href="http://unitsofmeasure.org/ucum.html#iso1000">UCUM Table 5</a>
     */
    public static final Unit<Volume> LITER = new TransformedUnit<Volume>("l", "Litre", CUBIC_METRE, MultiplyConverter.ofRational(1, 1000));
-   public static final Unit<Volume> LITER_DM3 = new AlternateUnit<>(DECI(METRE).pow(3).asType(Volume.class), "liter", "l");
+   //public static final Unit<Volume> LITER_DM3 = new AlternateUnit<>(DECI(METRE).pow(3).asType(Volume.class), "liter", "l");
 
 
    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
-   public static final Unit<Area> ARE = new AlternateUnit<>(SQUARE_METRE.multiply(100), "are", "a");
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
+   public static final Unit<Area> ARE = SQUARE_METRE.multiply(100);
    public static final Unit<Time> MINUTE = new TransformedUnit<>("min", "Minute", SECOND, SECOND, MultiplyConverter.ofRational(60, 1));
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Time> HOUR = new TransformedUnit<>("h", "Hour", SECOND, SECOND, MultiplyConverter.ofRational(60 * 60, 1));
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Time> DAY = new TransformedUnit<>("d", "Day", SECOND, SECOND, MultiplyConverter.ofRational(24 * 60 * 60, 1));
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Time> YEAR_TROPICAL = DAY.multiply(365.24219);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Time> YEAR_JULIAN = DAY.multiply(365.25);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Time> YEAR_GREGORIAN = DAY.multiply(365.2425);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. TODO Conflicting symbol */
-   public static final Unit<Time> YEAR = new AlternateUnit<>(DAY.multiply(365.25), "a", "Year");
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
-   public static final Unit<Time> WEEK = new AlternateUnit<>(DAY.multiply(7), "wk", "Week");
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
+   public static final Unit<Time> YEAR = DAY.multiply(365.25);
+   public static final Unit<Time> WEEK = DAY.multiply(7);
    public static final Unit<Time> MONTH_SYNODAL = DAY.multiply(29.53059);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Time> MONTH_JULIAN = YEAR_JULIAN.divide(12);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Time> MONTH_GREGORIAN = YEAR_GREGORIAN.divide(12);
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
-   public static final Unit<Time> MONTH = new AlternateUnit<>(YEAR_JULIAN.divide(12), "mo", "Month");
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
-   public static final Unit<Mass> TONNE = new AlternateUnit<>(KILO(GRAM).multiply(1000), "t", "Tonne");
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
-   public static final Unit<Pressure> BAR = new AlternateUnit<>(PASCAL.multiply(100000), "bar", "Bar");
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
+   public static final Unit<Time> MONTH = YEAR_JULIAN.divide(12);
+   public static final Unit<Mass> TONNE = KILO(GRAM).multiply(1000);
+   public static final Unit<Pressure> BAR = PASCAL.multiply(100000);
    public static final Unit<Mass> ATOMIC_MASS_UNIT = new TransformedUnit<>("u", "Unified atomic mass", KILO(GRAM), MultiplyConverter.of(1.660538782E-27));
 
    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Energy> ELECTRON_VOLT = new TransformedUnit<>("eV", "Electron Volt", JOULE, MultiplyConverter.of(1.602176487E-19));
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
    public static final Unit<Length> ASTRONOMIC_UNIT = new TransformedUnit<>("AU", "Astronomical Unit", METRE, MultiplyConverter.of(149597870700d));
-   /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
-   public static final Unit<Length> PARSEC = new AlternateUnit<>(METRE.multiply(3.085678E16), "pc", "Parsec");
+   public static final Unit<Length> PARSEC = new TransformedUnit<>("pc", "Parsec", METRE, MultiplyConverter.of(3.085678E16));
 
 }

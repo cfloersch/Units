@@ -16,6 +16,6 @@ import xpertss.measure.ucum.SI;
  */
 public interface Luminance extends Quantity<Luminance> {
 
-   public static final Unit<Luminance> UNIT = SI.CANDELAS_PER_SQUARE_METRE;
+   // TODO public static final Unit<Luminance> UNIT = CANDELAS_PER_SQUARE_METRE;
 
 }

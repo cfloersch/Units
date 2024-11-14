@@ -1,6 +1,8 @@
 package xpertss.measure.quantity;
 
 import xpertss.measure.Quantity;
+import xpertss.measure.Unit;
+import xpertss.measure.ucum.SI;
 
 /**
  * Radiant flux emitted, reflected, transmitted or received, per unit solid
@@ -12,4 +14,7 @@ import xpertss.measure.Quantity;
  * @see SolidAngle
  */
 public interface RadiantIntensity extends Quantity<RadiantIntensity> {
+
+    public static final Unit<RadiantIntensity> UNIT = SI.WATT_PER_STERADIAN;
+
 }
