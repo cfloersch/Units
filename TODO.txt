@@ -6,8 +6,39 @@ we can prefix the base unit's symbol.
 
 ----------------------------
 
-I cannot use Prefixed Units in AlternateUnit. Is that a real need or is it
-just conceptual?
+So rework AlternateUnit as it should always reflect an Alternate type of unit
+within a domain. For example within the Length domain Feet, Yard, Inch are
+alternative units from the BaseUnit of METRE.
+
+A Prefixed unit like KILO(METRE) should be classified as an Alternate Unit as
+it is in the same domain just a different multiple.
+
+NEWTON = METRE.multiply(KILO(GRAM)).divide(SECOND.pow(2) is NOT an Alternate
+unit but a derived unit. In my world derived units are Transformed or
+ProductUnits.
+
+When it comes to derived units it would be nice if the symbols where stitched
+together.
+
+I should validate this but I suspect that almost ALL transformed units would
+be AlternateUnits as defined above. And from the UCUM impl they do in fact
+appear to be.
+
+----------------------------
+
+SystemUnit and BaseUnit are virtually the same. So what is the system unit for
+say Force? Is that a ProductUnit which is a composition of METRE, GRAM, and
+SECOND?
+
+----------------------------
+
+I would like to have a utility method on ProductUnit that makes it easy to give
+it a name, symbol, and even type cast it to a particular quantity TYPE.
+
+Additionally, if not overridden it would be nice if the Product Unit derived its
+unit symbol from the input unit symbols. For example Newton in known as N but it
+ is also kg*m/s2.. The later could be derived from
+        METRE.multiply(KILO(GRAM)).divide(SECOND.pow(2)).
 
 ----------------------------
 

@@ -1,0 +1,45 @@
+So a system unit is always the base unit for a given dimension. For
+example the METRE is the system unit for km, in, ft, yd, etc. When
+we get into ProductUnits like Newton for example. Newton could be
+the system unit for Force where all other units of force convert
+down to that. Of course FORCE is not a base dimension. But it is a
+derived dimension.
+
+So technically Base and Product units are my SystemUnits. There are
+two types of AlternateUnits. The first is a conversion FACTOR and
+the second is a SCALE. Bth ultimately get modeled as Transformed.
+
+Conversion between Alternate ProductUnits will be much more complex
+than conversion between your more common TransformedUnits.
+
+A good example would be two FORCE Product Units
+
+SI.NEWTON = METRE.multiply(KILO(GRAM)).divide(SECOND.pow(2))
+
+CGS.DYNE = GRAM.multiply(CENTI(METRE).divide(SECOND.pow(2)))
+
+When I can convert 1 Newton = 100000 Dyne, I have found success
+
+
+
+System units are standardized:
+Each measurement system (like the metric system or the imperial system)
+has a set of base units (like meters, seconds, kilograms) that are
+considered "system units" and are used as the foundation for all other
+units within that system.
+
+Transformation creates new units:
+When you transform a unit by multiplying or dividing it with another
+unit, you are essentially creating a new unit that isn't explicitly
+defined within the system, making it a "transformed unit".
+
+
+Example
+System unit: "meter" (m) - a standard unit of length in the metric
+system.
+
+Transformed unit: "meters per second" (m/s) - this unit is created
+by dividing meters by seconds, which is useful for measuring speed
+but isn't a predefined unit within the metric system.
+
+

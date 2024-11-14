@@ -146,8 +146,8 @@ public abstract class Unit<Q extends Quantity<Q>> implements Comparable<Unit<Q>>
     * System units are either base units, {@linkplain #alternate(String)
     * alternate} units or product of rational powers of system units.
     * <p/>
-    * Because the system unit is unique by quantity type, it can be be
-    * used to identify the quantity given the unit. For example:
+    * Because the system unit is unique by quantity type, it can be used
+    * to identify the quantity given the unit. For example:
     * <p/>
     * <pre>
     *     static boolean isAngularSpeed(Unit<?> unit) {

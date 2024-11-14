@@ -78,8 +78,7 @@ public final class SI {
     *
     * TODO Fix this.. I have to have NEWTON = AlternateUnit and it MUST be KILOGRAM not GRAM..
     */
-   public static final Unit<Force> NEWTON = new AlternateUnit<>(GRAM.multiply(THOUSANDS).multiply(METRE).divide(SECOND.pow(2)), "N", "Newton");
-   //public static final Unit<Force> NEWTON = new AlternateUnit<>(METRE.multiply(GRAM).divide(SECOND), "N", "Newton");
+   public static final Unit<Force> NEWTON = new AlternateUnit<>(METRE.multiply(GRAM).divide(SECOND.pow(2)), "N", "Newton");
 //   public static final Unit<Force> NEWTON = new AlternateUnit<>(METRE.multiply(KILO(GRAM)).divide(SECOND.pow(2)), "N", "Newton");
 
    /** As per <a href="http://unitsofmeasure.org/">UCUM</a> standard. */
@@ -271,7 +270,8 @@ public final class SI {
    /**
     * The SI unit for speed quantities (standard name <code>m/s</code>).
     */
-   public static final Unit<Speed> METRE_PER_SECOND = new ProductUnit<>(METRE.divide(SECOND));
+   public static final Unit<Speed> METRE_PER_SECOND =  new ProductUnit<>(METRE.divide(SECOND));
+
 
    /**
     * The SI unit for acceleration quantities (standard name <code>m/s2</code>).

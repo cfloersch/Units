@@ -39,6 +39,8 @@ public final class AlternateUnit<Q extends Quantity<Q>> extends Unit<Q> {
 	public AlternateUnit(Unit<?> parentUnit, String symbol)
 	{
 		super(symbol);
+
+		// TODO Why MUST parent unit be System Unit? What exactly defines a system unit
 		if (!parentUnit.isSystemUnit())
 			throw new IllegalArgumentException("The parent unit: " + parentUnit + " is not an unscaled SI unit");
 
